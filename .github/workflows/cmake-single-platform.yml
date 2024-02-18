@@ -18,6 +18,10 @@ jobs:
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
+    
+    container:
+      image: docker.io/onuralpsozer/hello-c-cpp:latest
+      options: --privileged
 
     steps:
     - uses: actions/checkout@v3
@@ -30,9 +34,6 @@ jobs:
     - name: Build
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-
-    - name: Install pytest
-      run: pip install pytest
       
     - name: Test
       working-directory: ${{github.workspace}}/build
